@@ -25,6 +25,21 @@ const AestheticClock = () => {
     setParticles(newParticles);
   }, []);
 
+  // Add this to your current React component
+  useEffect(() => {
+    const keepAwake = async () => {
+      try {
+        if ('wakeLock' in navigator) {
+          await navigator.wakeLock.request('screen');
+        }
+      } catch (err) {
+        console.error('Wake Lock failed:', err);
+      }
+    };
+    
+    keepAwake();
+  }, []);
+
   // Format time
   const hours = time.getHours().toString().padStart(2, '0');
   const minutes = time.getMinutes().toString().padStart(2, '0');
